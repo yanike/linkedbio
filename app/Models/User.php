@@ -62,7 +62,7 @@ class User extends Authenticatable
             'required',
             'string', 
             'max:255', 
-            'unique:users', 
+            Rule::unique('users')->ignore(auth()->id()),
             Rule::notIn($forbiddenUsernames),
             'regex:/^[a-zA-Z0-9._]+$/'
         ];
