@@ -22,7 +22,7 @@ use App\Http\Controllers\StatsController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 /*
 |--------------------------------------------------------------------------
