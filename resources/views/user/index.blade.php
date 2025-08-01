@@ -45,15 +45,15 @@
             @endforeach
 
         </section>
-
+        <a href="{{ route('welcome') }}" class="flex items-center">
         <div class="shrink-0 flex items-center justify-center w-full py-4">
-                    <a href="{{ route('welcome') }}" class="flex items-center">
                         <div class="h-auto w-24 mr-2">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
 </div>
-                    </a>
-                    (beta)
+                    
+                    <span class="text-base  text-gray-600 dark:text-gray-400">(beta)</a>
                 </div>
+</a>
     </div>
 </body>
 </html>
