@@ -1,4 +1,7 @@
 <x-guest-layout>
+<div class="h-auto w-24 mb-4">
+                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
+</div>
     <form method="POST" action="{{ route('password.store') }}">
         @csrf
 
