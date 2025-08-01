@@ -31,7 +31,7 @@
 
             <div class="max-w-7xl mx-auto p-6 lg:p-8">
             <x-application-logo class="block h-9 w-auto fill-current text-gray-800 dark:text-gray-200" />
-                    <h1 class="text-7xl sm:text-8xl font-bold text-gray-600 dark:text-gray-400">
+                    <h1 class="mt-4 text-5xl font-bold text-gray-600 dark:text-gray-400">
                         Your corner of the internet.
                     </h1>
                     
