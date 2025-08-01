@@ -2,10 +2,10 @@
   channel = "stable-24.05";
   packages = [
     pkgs.nodejs_20
-    pkgs.php
-    pkgs.phpPackages
-    pkgs.phpExtensions
-    pkgs.phpPackages.composer
+    pkgs.php82
+    pkgs.php82Packages
+    pkgs.php82Extensions
+    pkgs.php82Packages.composer
   ];
   idx.extensions = [
     "svelte.svelte-vscode"
