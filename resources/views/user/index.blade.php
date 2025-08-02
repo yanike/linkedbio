@@ -24,6 +24,9 @@
 
     <div class="px-6 sm:p-0 sm:w-3/6 mx-auto mt-24 text-center">
 
+        @if ($user->photo)
+            <img src="{{ asset('storage/' . $user->photo) }}" alt="{{ $user->name }}" class="rounded-full w-24 h-24 mx-auto mb-4 object-cover">
+        @endif
         <h1 class="font-semibold text-xl text-gray-600 dark:text-gray-300 text-center">
             {{ $user->name }}
         </h1>
