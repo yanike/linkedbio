@@ -18,6 +18,15 @@
         @method('patch')
 
         <div>
+            @if ($user->photo)
+            <img src="{{ Storage::url($user->photo) }}" alt="{{ $user->name }}" class="w-24 h-24 rounded-full mx-auto">
+            @endif
+
+            <x-input-label for="photo" :value="__('Photo')" />
+            <input id="photo" name="photo" type="file" class="mt-1 block w-full" />
+            <x-input-error class="mt-2" :messages="$errors->get('photo')" />
+        </div>
+
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
@@ -33,12 +42,6 @@
             <x-input-label for="bio" :value="__('Bio')" />
             <x-textarea id="bio" name="bio" type="text" class="mt-1 block w-full" autofocus autocomplete="bio" >{{old('bio', $user->bio)}}</x-textarea>
             <x-input-error class="mt-2" :messages="$errors->get('bio')" />
-        </div>
-
-        <div>
-            <x-input-label for="photo" :value="__('Photo')" />
-            <input id="photo" name="photo" type="file" class="mt-1 block w-full" />
-            <x-input-error class="mt-2" :messages="$errors->get('photo')" />
         </div>
 
         <div>
