@@ -21,7 +21,6 @@ class ProfileUpdateRequest extends FormRequest
             'username' => User::getUsernameValidationRules(),
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'bio' => ['string', 'max:150'],
-            'photo' => ['nullable', 'image', 'max:2048'], // Max 2MB
         ];
     }
 }
