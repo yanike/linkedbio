@@ -30,10 +30,11 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
-        $validatedData = $request->validated();
-        unset($validatedData['photo']);
+        // Fill only non-photo data
+        $data = $request->validated();
+        unset($data['photo']); // make sure it's not there
 
-        $user->fill($validatedData);
+        $user->fill($data);
 
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('profile-photos', 's3');
