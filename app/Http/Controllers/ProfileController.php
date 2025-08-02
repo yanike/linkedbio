@@ -30,7 +30,11 @@ class ProfileController extends Controller
         // Handle photo upload if a file is present
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('profile-photos', 'public');
+
+            // Check if the file was successfully stored before assigning the path
+            if ($path) {
             $request->user()->photo = $path;
+        }
         }
 
 
