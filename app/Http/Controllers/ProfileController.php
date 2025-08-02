@@ -29,7 +29,11 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
-        $user->fill($request->validated());
+
+        $validatedData = $request->validated();
+        unset($validatedData['photo']);
+
+        $user->fill($validatedData);
 
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('profile-photos', 's3');
