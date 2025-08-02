@@ -27,6 +27,7 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        // Handle photo upload if a file is present
         if ($request->hasFile('photo')) {
             $path = $request->file('photo')->store('profile-photos', 'public');
             $request->user()->photo = $path;
