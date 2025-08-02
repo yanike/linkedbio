@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -28,22 +29,15 @@ class ProfileController extends Controller
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $user = $request->user();
+        $user->fill($request->validated());
 
-        // Separate photo handling from filling other data
-        $validatedData = $request->validated();
-
-        // Fill validated data (but not photo yet)
-        $user->fill($validatedData);
-
-        // Handle photo upload if a file is present
         if ($request->hasFile('photo')) {
-            // Store the photo on the 'r2' disk
-            $path = $request->file('photo')->store('profile-photos', 'r2');
+            $path = $request->file('photo')->store('profile-photos', 's3');
 
             if ($path) {
-                // Optional: delete old photo
-                if ($user->getOriginal('photo') && Storage::disk('r2')->exists($user->getOriginal('photo'))) {
-                    Storage::disk('public')->delete($user->getOriginal('photo'));
+                // Delete old photo from S3/R2 if exists
+                if ($user->getOriginal('photo')) {
+                    Storage::disk('s3')->delete($user->getOriginal('photo'));
                 }
 
                 $user->photo = $path;

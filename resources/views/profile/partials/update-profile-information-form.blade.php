@@ -19,7 +19,7 @@
 
         <div>
             @if ($user->photo)
-            <img src="{{ Storage::disk('r2')->url($user->photo) }}" alt="{{ $user->name }}" class="w-24 h-24 rounded-full mx-auto">
+            <img src="{{ Storage::disk('s3')->url($user->photo) }}" alt="{{ $user->name }}" class="w-24 h-24 rounded-full mx-auto">
             @endif
 
             <x-input-label for="photo" :value="__('Photo')" />
