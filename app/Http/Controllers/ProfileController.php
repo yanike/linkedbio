@@ -29,16 +29,20 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
+        // Separate photo handling from filling other data
+        $validatedData = $request->validated();
+
         // Fill validated data (but not photo yet)
-        $user->fill($request->validated());
+        $user->fill($validatedData);
 
         // Handle photo upload if a file is present
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('profile-photos', 'public');
+            // Store the photo on the 'r2' disk
+            $path = $request->file('photo')->store('profile-photos', 'r2');
 
             if ($path) {
                 // Optional: delete old photo
-                if ($user->getOriginal('photo')) {
+                if ($user->getOriginal('photo') && Storage::disk('r2')->exists($user->getOriginal('photo'))) {
                     Storage::disk('public')->delete($user->getOriginal('photo'));
                 }
 
