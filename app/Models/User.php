@@ -23,6 +23,7 @@ class User extends Authenticatable
         'username',
         'email',
         'bio',
+        'photo',
         'password',
     ];
 
@@ -53,15 +54,20 @@ class User extends Authenticatable
     public static function getUsernameValidationRules()
     {
         $forbiddenUsernames = [
-            'dashboard', 'home', 'login',
-            'register', 'link', 'links', 
-            'stats', 'profile'
+            'dashboard',
+            'home',
+            'login',
+            'register',
+            'link',
+            'links',
+            'stats',
+            'profile'
         ];
 
-        return  [  
+        return  [
             'required',
-            'string', 
-            'max:255', 
+            'string',
+            'max:255',
             Rule::unique('users')->ignore(auth()->id()),
             Rule::notIn($forbiddenUsernames),
             'regex:/^[a-zA-Z0-9._]+$/'
@@ -88,7 +94,8 @@ class User extends Authenticatable
         return $this->hasMany(Link::class);
     }
 
-    public function linkImpression(){
+    public function linkImpression()
+    {
         return $this->hasMany(LinkImpression::class);
     }
 }
