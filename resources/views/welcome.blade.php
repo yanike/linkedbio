@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="col-span-12 md:col-span-3 p-4">
-                <img src="{{ asset('images/linkedbi.o_phone2.png') }}" alt="LinkedBio Phone View" class="rounded-lg w-full max-w-sm">
+                <img src="{{ asset('images/linkedbi.o_phone.png') }}" alt="LinkedBio Phone View" class="rounded-lg w-full max-w-sm">
             </div>
         </div>
     </div>
