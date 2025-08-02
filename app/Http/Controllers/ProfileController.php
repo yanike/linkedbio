@@ -30,30 +30,56 @@ class ProfileController extends Controller
     {
         $user = $request->user();
 
+        // Log at the beginning of the method
+        Log::info('ProfileController update - Start');
+        Log::info('User photo at start: ' . ($user->photo ? $user->photo : 'null')); // Handle null photo
+        Log::info('Request validated data: ' . json_encode($request->validated()));
+
         // Fill only non-photo data
+        $data = $request->validated();
+        unset($data['photo']); // make sure it's not there
+        $user->fill($data);
+
+        // Log after fill
+        $user = $request->user();
         $data = $request->validated();
         unset($data['photo']); // make sure it's not there
 
         $user->fill($data);
+        Log::info('User photo after fill (should be original or null): ' . ($user->photo ? $user->photo : 'null')); // Handle null photo
+
 
         if ($request->hasFile('photo')) {
-            $path = $request->file('photo')->store('profile-photos', 's3');
+            $file = $request->file('photo');
+            Log::info('Uploaded file name: ' . $file->getClientOriginalName());
+            Log::info('Uploaded file temporary path: ' . $file->getPathname());
+
+            $path = $file->store('profile-photos', 's3');
+
+            Log::info('Stored file path (from S3/R2): ' . ($path ? $path : 'false or null')); // Log result of store()
 
             if ($path) {
                 // Delete old photo from S3/R2 if exists
                 if ($user->getOriginal('photo')) {
                     Storage::disk('s3')->delete($user->getOriginal('photo'));
-                }
+                    Log::info('Old photo path: ' . $user->getOriginal('photo'));
+                    Storage::disk('s3')->delete($user->getOriginal('photo'));
+                    Log::info('Deleted old photo: ' . $user->getOriginal('photo'));
 
                 $user->photo = $path;
+                Log::info('User photo attribute set to stored path: ' . $user->photo);
+            } else {
+                 Log::warning('File storage failed. $path is not set.');
             }
-        }
+        } else {
+             Log::info('No photo file uploaded.');
+            }
 
+        }
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
-
-        $user->save();
+        Log::info('User photo after fill (should be original or null): ' . ($user->photo ? $user->photo : 'null')); // Handle null photo
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
