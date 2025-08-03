@@ -19,7 +19,7 @@
                     $indicator = $performance > 0 ? '▲' : ($performance < 0 ? '▼' : '');
                 @endphp
                 <p class="text-gray-500 dark:text-gray-400 text-sm mt-1 {{ $colorClass }}">
-                    This week performance: {{ abs($performance) }}% {{ $indicator }}
+                    Weekly performance: {{ abs($performance) }}% {{ $indicator }}
                 </p>
         </div>
 
