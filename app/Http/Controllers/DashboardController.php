@@ -15,6 +15,7 @@ class DashboardController extends Controller
      */
     public function index(){
         $links = Link::select(['id', 'title', 'url'])
+                    ->withCount('click')
                     ->where('user_id', auth()->id())
                     ->orderBy('id', 'desc')
                     ->get();
