@@ -19,12 +19,15 @@
 
         <div>
             @if ($user->photo)
-            <img src="{{ Storage::disk('s3')->url($user->photo) }}" alt="{{ $user->name }}" class="w-24 h-24 rounded-full mx-auto">
+            <img src="{{ Storage::disk('s3')->url($user->photo) }}" alt="{{ $user->name }}" class="w-28 h-28 rounded-full mx-auto">
             @endif
 
             <x-input-label for="photo" :value="__('Photo')" />
             <input id="photo" name="photo" type="file" class="mt-1 block w-full" />
             <x-input-error class="mt-2" :messages="$errors->get('photo')" />
+            
+            {{-- Add the image preview element here --}}
+            <img id="photo-preview" src="#" alt="Photo Preview" class="w-28 h-28 rounded-full mx-auto mt-2" style="display: none;">
         </div>
 
         <x-input-label for="name" :value="__('Name')" />
@@ -81,3 +84,24 @@
         </div>
     </form>
 </section>
+
+{{-- Add the script tag here --}}
+<script>
+    const photoInput = document.getElementById('photo');
+    const photoPreview = document.getElementById('photo-preview');
+
+    photoInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                photoPreview.src = e.target.result;
+                photoPreview.style.display = 'block'; // Show the preview
+            }
+            reader.readAsDataURL(file);
+        } else {
+            photoPreview.src = '#';
+            photoPreview.style.display = 'none'; // Hide if no file is selected
+        }
+    });
+</script>
