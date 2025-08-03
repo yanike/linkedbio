@@ -13,6 +13,14 @@
                 <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">
                     Clicks: {{ $link->click_count ?? 0 }}
                 </p>
+                @php
+                    $performance = $link->performance_change ?? 0;
+                    $colorClass = $performance > 0 ? 'text-green-500' : ($performance < 0 ? 'text-red-500' : 'text-gray-500');
+                    $indicator = $performance > 0 ? '▲' : ($performance < 0 ? '▼' : '');
+                @endphp
+                <p class="text-gray-500 dark:text-gray-400 text-sm mt-1 {{ $colorClass }}">
+                    This week performance: {{ abs($performance) }}% {{ $indicator }}
+                </p>
         </div>
 
     </a>
