@@ -41,7 +41,6 @@ class ProfileController extends Controller
         $user->fill($data);
 
         // Log after fill
-        $user = $request->user();
         $data = $request->validated();
         unset($data['photo']); // make sure it's not there
 
@@ -62,21 +61,18 @@ class ProfileController extends Controller
                 // Delete old photo from S3/R2 if exists
                 if ($user->getOriginal('photo')) {
                     Storage::disk('s3')->delete($user->getOriginal('photo'));
-                    Log::info('Old photo path: ' . $user->getOriginal('photo'));
-                    Storage::disk('s3')->delete($user->getOriginal('photo'));
+ Log::info('Old photo path: ' . $user->getOriginal('photo'));
                     Log::info('Deleted old photo: ' . $user->getOriginal('photo'));
-
-                $user->photo = $path;
-                Log::info('User photo attribute set to stored path: ' . $user->photo);
+                }
+ $user->photo = $path;
+ Log::info('User photo attribute set to stored path: ' . $user->photo);
             } else {
-                 Log::warning('File storage failed. $path is not set.');
+ Log::warning('File storage failed. $path is not set.');
             }
         } else {
-             Log::info('No photo file uploaded.');
-            }
-
+ Log::info('No photo file uploaded.');
         }
-        if ($user->isDirty('email')) {
+ if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
         Log::info('User photo after fill (should be original or null): ' . ($user->photo ? $user->photo : 'null')); // Handle null photo
