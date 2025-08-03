@@ -10,7 +10,7 @@
                     {{ $link->url }}
                 </p>
                 <p class="text-gray-500 dark:text-gray-400 text-sm mt-2">
-                    Clicks: {{ $link->clicks_count ?? 0 }}
+                    Clicks: {{ $link->click_count ?? 0 }}
                 </p>
             </div>
         

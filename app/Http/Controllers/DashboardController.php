@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Link;
 use App\Http\Controllers\StatsController;
+use Illuminate\Support\Facades\Log;
 
 class DashboardController extends Controller
 {
@@ -19,6 +20,8 @@ class DashboardController extends Controller
                     ->where('user_id', auth()->id())
                     ->orderBy('id', 'desc')
                     ->get();
+
+        Log::info('Dashboard Links:', $links->toArray());
     
         foreach($links as $link){
             if(strlen($link->url) > 35){
