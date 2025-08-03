@@ -18,7 +18,11 @@ class UserController extends Controller
      */
     public function index($username)
     {
-        $user = User::where('username', $username)->firstOrFail();
+        $user = User::where('username', $username)->first();
+
+        if (! $user) {
+            abort(404);
+        }
         $links = Link::where('user_id', $user->id)
                     ->orderBy('order')
                     ->orderBy('id', 'desc')->get();
