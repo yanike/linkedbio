@@ -19,7 +19,9 @@ class UserController extends Controller
     public function index($username)
     {
         $user = User::where('username', $username)->firstOrFail();
-        $links = Link::where('user_id', $user->id)->get();
+        $links = Link::where('user_id', $user->id)
+                    ->orderBy('order')
+                    ->orderBy('id', 'desc')->get();
 
         if(auth()->id() !== $user->id) {
             View::create([

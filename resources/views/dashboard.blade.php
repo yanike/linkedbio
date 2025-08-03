@@ -44,3 +44,35 @@
         </div>
     </div>
 </x-app-layout>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
+
+{{-- Add the JavaScript for drag and drop --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const linkList = document.getElementById('link-list');
+
+        if (linkList) { // Check if the element exists
+            Sortable.create(linkList, {
+                animation: 150,
+                ghostClass: 'sortable-ghost', // Class name for the drop placeholder
+                onEnd: function (evt) {
+                    const order = [];
+                    linkList.querySelectorAll('[data-id]').forEach(item => {
+                        order.push(item.dataset.id);
+                    });
+
+                    // Send the new order to the server
+                    fetch('{{ route("links.updateOrder") }}', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': '{{ csrf_token() }}' },
+                        body: JSON.stringify({ order: order })
+                    })
+                    .then(response => response.json())
+                    .then(data => console.log('Order updated:', data))
+                    .catch(error => console.error('Error updating order:', error));
+                },
+            });
+        }
+    });
+</script>

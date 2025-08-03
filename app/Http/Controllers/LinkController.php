@@ -73,4 +73,27 @@ class LinkController extends Controller
         $link->delete();
         return redirect()->route('dashboard');
     }
+
+    /**
+     * Update the order of links.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateOrder(Request $request)
+    {
+        $order = $request->input('order'); // Get the ordered array of link IDs
+
+        if (!is_array($order)) {
+            return response()->json(['message' => 'Invalid order data'], 400);
+        }
+
+        foreach ($order as $position => $linkId) {
+            Link::where('id', $linkId)
+                ->where('user_id', auth()->id()) // Ensure the user owns the link
+                ->update(['order' => $position]);
+        }
+
+        return response()->json(['message' => 'Link order updated successfully']);
+    }
 }

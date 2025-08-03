@@ -18,6 +18,7 @@ class DashboardController extends Controller
         $links = Link::select(['id', 'title', 'url'])
                     ->withCount('click') // Add this line to eager load the click count
                     ->where('user_id', auth()->id())
+                    ->orderBy('order') // Add this line
                     ->orderBy('id', 'desc')
                     ->get();
 

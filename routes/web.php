@@ -59,6 +59,15 @@ Route::middleware('auth')->group(function () {
 
 /*
 |--------------------------------------------------------------------------
+| Order Routes
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
+    Route::post('/links/update-order', [\App\Http\Controllers\LinkController::class, 'updateOrder'])->name('links.updateOrder');
+});
+
+/*
+|--------------------------------------------------------------------------
 | Click Routes
 |--------------------------------------------------------------------------
 */
