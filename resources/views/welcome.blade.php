@@ -7,6 +7,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <link rel="manifest" href="/build/manifest.json">
+
     <link rel="icon" type="image/png" href="/favicon.jpg" />
 
     <!-- Fonts -->
