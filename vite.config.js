@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
+import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
   plugins: [
@@ -10,32 +11,36 @@ export default defineConfig({
       ],
       refresh: true,
     }),
-    import('vite-plugin-pwa').then(({ VitePWA }) => VitePWA({
+    VitePWA({
+      injectRegister: 'auto',
       registerType: 'autoUpdate',
       manifest: {
         name: 'linkedb.io',
         short_name: 'linkedb.io',
         description: 'Your corner of the internet! Create your own link in bio page.',
-        theme_color: '#FFFFFF',
-        background_color: '#FFFFFF',
+        theme_color: '#ffffff',
         display: 'standalone',
-        start_url: 'https://www.linkedb.io',
         icons: [
           {
             src: '/linkedbio_logo.jpg',
             sizes: '192x192',
-            type: 'image/jpeg',
+            type: 'image/jpg',
+            purpose: 'maskable',
           },
           {
             src: '/linkedbio_logo.jpg',
             sizes: '512x512',
-            type: 'image/jpeg',
+            type: 'image/jpg',
+            purpose: 'any',
           },
         ],
       },
+      includeAssets: ['/linkedbio_logo.jpg'],
+      srcDir: 'public', // Set the source directory to public
+      outDir: 'public', // Set the output directory to public
       devOptions: {
         enabled: true,
       },
-    })),
+    }),
   ],
 });
