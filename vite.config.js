@@ -13,13 +13,13 @@ export default defineConfig({
     import('vite-plugin-pwa').then(({ VitePWA }) => VitePWA({
       registerType: 'autoUpdate',
       manifest: {
-        name: 'LinkedBi.o',
-        short_name: 'LinkedBi.o',
+        name: 'linkedb.io',
+        short_name: 'linkedb.io',
         description: 'Your corner of the internet! Create your own link in bio page.',
         theme_color: '#FFFFFF',
         background_color: '#FFFFFF',
         display: 'standalone',
-        start_url: '/',
+        start_url: 'https://www.linkedb.io',
         icons: [
           {
             src: '/linkedbio_logo.jpg',
