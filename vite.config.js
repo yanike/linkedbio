@@ -19,23 +19,26 @@ export default defineConfig({
         short_name: 'linkedb.io',
         description: 'Your corner of the internet! Create your own link in bio page.',
         theme_color: '#ffffff',
+        background_color: '#ffffff',
         display: 'standalone',
+        start_url: '/',
         icons: [
           {
             src: '/linkedbio_logo.jpg',
             sizes: '192x192',
             type: 'image/jpg',
             purpose: 'maskable',
+
           },
           {
             src: '/linkedbio_logo.jpg',
             sizes: '512x512',
             type: 'image/jpg',
             purpose: 'any',
+
           },
         ],
       },
-      includeAssets: ['/linkedbio_logo.jpg'],
       srcDir: 'public', // Set the source directory to public
       outDir: 'public', // Set the output directory to public
       devOptions: {
